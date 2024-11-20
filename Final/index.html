@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Scholarship Login</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        #login-section, #student-section, #management-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        #login-message, #student-message, #management-message {
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style> -->
+</head>
+<body>
+
+    <div id="login-section">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="user_type">Select User Type:</label>
+            <select id="user_type" required>
+                <option value="student">Student</option>
+                <option value="management">Management</option>
+            </select>
+            <br><br>
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <br><br>
+            <button type="submit">Login</button>
+        </form>
+        <div id="login-message"></div>
+    </div>
+
+    <div id="student-section" style="display:none;">
+        <button id="back-to-login-student" class="logout-button">Logout</button>
+        <h2>Student Dashboard</h2>
+        <!-- <label for="SRN">Enter SRN:</label>
+        <input type="text" id="SRN"> -->
+        <button id="view-details">View Details</button>
+        <button id="view-transaction">View Transaction Status</button>
+        <div id="student-message"></div>
+
+        <h2>Change Password</h2>
+        <label for="current-password">Current Password:</label>
+        <input type="password" id="current-password">
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password">
+        <button id="change-password-student">Change Password</button>
+    </div>
+
+    <div id="management-section" style="display:none;">
+        <button id="back-to-login-management" class="logout-button">Logout</button>
+        <h2>Management Dashboard</h2>
+        <h3>View Staff Details</h3>
+        <label for="Staff_ID">Enter Staff ID:</label>
+        <input type="text" id="Staff_ID">
+        <button id="view-staff">View Staff Details</button>
+        <div id="management-message"></div>
+
+        <h3>View Student Details</h3>
+        <label for="view_student_SRN">Enter SRN:</label>
+        <input type="text" id="view_student_SRN">
+        <button id="view-student-details">View Student Details</button>
+        <div id="view-student-details-message"></div>
+
+        <h3>Update Student Details</h3>
+        <label for="update_SRN">Enter SRN:</label>
+        <input type="text" id="update_SRN">
+        <label for="update_fields">Field to Update:</label>
+        <select id="update_fields">
+            <option value="Name">Name</option>
+            <option value="Semester">Semester</option>
+            <option value="Section">Section</option>
+            <option value="Branch">Branch</option>
+            <option value="Gender">Gender</option>
+            <option value="Date_of_Birth">Date of Birth</option>
+            <option value="Street">Street</option>
+            <option value="City">City</option>
+            <option value="State">State</option>
+            <option value="CGPA">CGPA</option>
+            <option value="SGPA">SGPA</option>
+            <option value="Credits_received">Credits Received</option>
+            <option value="Credits_required">Credits Required</option>
+            <option value="Account_number">Account Number</option>
+            <option value="IFSC_code">IFSC Code</option>
+            <option value="Fee_category">Fee Category</option>
+            <option value="Fee_amount">Fee Amount</option>
+            <option value="Payment_status">Payment Status</option>
+            <option value="Eligibility">Eligibility</option>
+        </select>
+        <input type="text" id="update_value" placeholder="New Value">
+        <button id="update-student">Update Student Details</button>
+        <div id="management-message1"></div>
+
+        <h3>Delete Student Record</h3>
+        <label for="delete_SRN">Enter Student SRN:</label>
+        <input type="text" id="delete_SRN">
+        <button id="delete-student">Delete Student Record</button>
+        <div id="management-message2"></div>
+
+        <h3>View Transaction Details</h3>
+        <label for="transaction_SRN">Enter SRN:</label>
+        <input type="text" id="transaction_SRN" required>
+        <button id="view-transaction-management">View Transaction Status</button>
+
+        <div id="transaction-message"></div>
+
+        <h3>Update Transaction Status</h3>
+        <label for="transaction_SRN_update">Enter SRN:</label>
+        <input type="text" id="transaction_SRN_update">
+        <!-- <label for="transaction_Name">Enter Name:</label>
+        <input type="text" id="transaction_Name"> -->
+        <label for="transaction_status">New Transaction Status:</label>
+        <input type="text" id="transaction_status" placeholder="New Status">
+        <button id="update-transaction">Update Transaction Status</button>
+
+        <div id="management-message3"></div>
+
+        <h3>Delete Staff Record</h3>
+        <label for="delete_Staff_ID">Enter Staff ID:</label>
+        <input type="text" id="delete_Staff_ID">
+        <button id="delete-staff">Delete Staff Record</button>
+        <div id="management-message4"></div>
+ 
+        
+
+        <h3>Edit Staff Details</h3>
+        <label for="edit_Staff_ID">Enter Staff ID:</label>
+        <input type="text" id="edit_Staff_ID">
+        <label for="edit_fields">Field to Update:</label>
+        <select id="edit_fields">
+            <option value="Name">Name</option>
+            <option value="Department_ID">Department ID</option>
+            <option value="Department_name">Department Name</option>
+            <option value="College_email">College Email</option>
+        </select>
+        <input type="text" id="edit_value" placeholder="New Value">
+        <button id="edit-staff">Edit Staff Details</button>
+        <div id="management-message5"></div>
+
+        <h3>Generate Scholarship Distribution</h3>
+        <label for="semester">Semester:</label>
+        <input type="number" id="semester" min="1" max="8">
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch">
+        <label for="section">Section:</label>
+        <input type="text" id="section">
+        <button id="generate-scholarship-report">Generate Report</button>
+
+        <div id="scholarship-table"></div>
+
+        <h3>View Total Scholarship Allocation</h3>
+        <button id="view-total-allocation">View Total Allocation</button>
+        <div id="allocation-table"></div>
+
+        <h3>Scholarship Statistics for each Fee Category</h3>
+        <label for="scholarship-semester">Enter Semester:</label>
+        <input type="number" id="scholarship-semester" min="1" max="8">
+        <button id="view-scholarship-stats">View Scholarship Stats</button>
+        <div id="scholarship-stats-table"></div>
+
+
+        <h3>Change Password</h3>
+        <label for="current-password-management">Current Password:</label>
+        <input type="password" id="current-password-management">
+        <label for="new-password-management">New Password:</label>
+        <input type="password" id="new-password-management">
+        <button id="change-password-management">Change Password</button>
+
+        <div id="management-message-pwd"></div>
+    </div>
+
+    <script>
+        // Login handler
+        $('#login-form').on('submit', function(e) {
+            e.preventDefault();
+            const user_type = $('#user_type').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/login',
+                method: 'POST',
+                contentType: 'application/json',
+                 data: JSON.stringify({
+                   user_type: $('#user_type').val(),
+                    username: $('#username').val(),
+                    password: $('#password').val()
+        }),
+                success: function(response) {
+                    $('#login-message').html(`<div style="color:green;">${response.message}</div>`);
+                    $('#login-section').hide();
+                    if (user_type === 'student') {
+                        $('#student-section').show();
+                    } else {
+                        $('#management-section').show();
+                    }
+                },
+                error: function(xhr) {
+                    $('#login-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View student details
+        $('#view-details').on('click', function() {
+            const SRN = $('#SRN').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/student/view',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }),
+                success: function(response) {
+                // Assuming the response has a student array similar to the given format
+                    // response.student = ["PES1UG22CS001","Rekha Singh",5,"B","Computer Science","Female","Thu, 12 Aug 2004 00:00:00 GMT","PEF","Mysore","Karnataka",6.6,6.3,90,92,123456789012346,"UBIN0564567","PESSAT",410000,"Partial","Not Eligible","PES1UG22CS001_B"];
+
+                    const student = response.student;
+
+                    // Create HTML table
+                    let tableHtml = 
+                        `
+                        <div style="overflow-x:auto;">
+                        <table>
+                            <tr>
+                                <th>SRN</th>
+                                <th>Name</th>
+                                <th>Semester</th>
+                                <th>Section</th>
+                                <th>Branch</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>CGPA</th>
+                                <th>SGPA</th>
+                                <th>Credits Received</th>
+                                <th>Credits Required</th>
+                                <th>Account Number</th>
+                                <th>IFSC Code</th>
+                                <th>Fee Category</th>
+                                <th>Fee Amount</th>
+                                <th>Payment Status</th>
+                                <th>Eligibility</th>
+                                <th>Password</th>
+                            </tr>
+                            <tr>
+                                <td>${student[0]}</td>
+                                <td>${student[1]}</td>
+                                <td>${student[2]}</td>
+                                <td>${student[3]}</td>
+                                <td>${student[4]}</td>
+                                <td>${student[5]}</td>
+                                <td>${new Date(student[6]).toLocaleDateString()}</td> <!-- Format date as needed -->
+                                <td>${student[7]}</td>
+                                <td>${student[8]}</td>
+                                <td>${student[9]}</td>
+                                <td>${student[10]}</td>
+                                <td>${student[11]}</td>
+                                <td>${student[12]}</td>
+                                <td>${student[13]}</td>
+                                <td>${student[14]}</td>
+                                <td>${student[15]}</td>
+                                <td>${student[16]}</td>
+                                <td>${student[17]}</td>
+                                <td>${student[18]}</td>
+                                <td>${student[19]}</td>
+                            </tr>
+                        </table>
+                        <div style="overflow-x:auto;">
+                    `;
+
+                    // Display the table in the message section
+                    $('#student-message').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#student-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View student details (management section)
+        $('#view-student-details').on('click', function() {
+            const SRN = $('#view_student_SRN').val();
+
+            if (!SRN) {
+                $('#view-student-details-message').html(`<div style="color:red;">Please enter a valid SRN.</div>`);
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/view_student',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }),
+                success: function(response) {
+                    // Assuming the response has a student array similar to the given format
+                    // response.student = ["PES1UG22CS001","Rekha Singh",5,"B","Computer Science","Female","Thu, 12 Aug 2004 00:00:00 GMT","PEF","Mysore","Karnataka",6.6,6.3,90,92,123456789012346,"UBIN0564567","PESSAT",410000,"Partial","Not Eligible","PES1UG22CS001_B"];
+
+                    const student = response.student;
+
+                    // Create HTML table
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>SRN</th>
+                                <th>Name</th>
+                                <th>Semester</th>
+                                <th>Section</th>
+                                <th>Branch</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>CGPA</th>
+                                <th>SGPA</th>
+                                <th>Credits Received</th>
+                                <th>Credits Required</th>
+                                <th>Account Number</th>
+                                <th>IFSC Code</th>
+                                <th>Fee Category</th>
+                                <th>Fee Amount</th>
+                                <th>Payment Status</th>
+                                <th>Eligibility</th>
+                                <th>Password</th>
+                            </tr>
+                            <tr>
+                                <td>${student[0]}</td>
+                                <td>${student[1]}</td>
+                                <td>${student[2]}</td>
+                                <td>${student[3]}</td>
+                                <td>${student[4]}</td>
+                                <td>${student[5]}</td>
+                                <td>${new Date(student[6]).toLocaleDateString()}</td> <!-- Format date as needed -->
+                                <td>${student[7]}</td>
+                                <td>${student[8]}</td>
+                                <td>${student[9]}</td>
+                                <td>${student[10]}</td>
+                                <td>${student[11]}</td>
+                                <td>${student[12]}</td>
+                                <td>${student[13]}</td>
+                                <td>${student[14]}</td>
+                                <td>${student[15]}</td>
+                                <td>${student[16]}</td>
+                                <td>${student[17]}</td>
+                                <td>${student[18]}</td>
+                                <td>${student[19]}</td>
+                            </tr>
+                        </table>
+                    `;
+
+                    // Display the table in the message section
+                    $('#view-student-details-message').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#view-student-details-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+
+
+                // View transaction status
+        $('#view-transaction').on('click', function() {
+            const SRN = $('#SRN').val(); // Capture the SRN from the input field
+            $.ajax({
+                url: 'http://127.0.0.1:5000/student/transaction',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }), // Send SRN as JSON
+                success: function(response) {
+                    // Create HTML table for transaction details
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Transaction Status</th>
+                                <th>Type of Scholarship</th>
+                            </tr>
+                            <tr>
+                                <td>${response.transaction_status}</td>
+                                <td>${response.type_of_scholarship}</td>
+                            </tr>
+                        </table>
+                    `;
+
+                    // Display the table in the message section
+                    $('#student-message').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#student-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+        // View staff details
+        $('#view-staff').on('click', function() {
+            const Staff_ID = $('#Staff_ID').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/view_staff',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Staff_ID }),
+                success: function(response) {
+                    // Create HTML table for staff details
+                    
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Staff ID</th>
+                                <th>Name</th>
+                                <th>Department ID</th>
+                                <th>Department Name</th>
+                                <th>College Email</th> 
+                            </tr>
+                            <tr>
+                                <td>${response.staff[0]}</td>
+                                <td>${response.staff[1]}</td>
+                                <td>${response.staff[2]}</td>
+                                <td>${response.staff[3]}</td>
+                                <td>${response.staff[4]}</td> 
+                            </tr>
+                        </table>
+                    `;
+                    
+                    // Display the table in the management message section
+                    $('#management-message').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#management-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+
+        // Update student details
+        $('#update-student').on('click', function() {
+            const SRN = $('#update_SRN').val();
+            const field = $('#update_fields').val();
+            const value = $('#update_value').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/edit_student',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN, [field]: value }),
+                success: function(response) {
+                    $('#management-message1').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message1').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // Update transaction status
+        $('#update-transaction').on('click', function() {
+            const SRN = $('#transaction_SRN_update').val();
+            // const Name = $('#transaction_Name').val();
+            const status = $('#transaction_status').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/edit_transaction',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN, status }),
+                success: function(response) {
+                    $('#management-message3').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message3').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // Delete student record
+        $('#delete-student').on('click', function() {
+            const SRN = $('#delete_SRN').val();
+
+            if (!SRN) {
+                $('#management-message2').html(`<div style="color:red;">Please enter a valid SRN to delete.</div>`);
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/delete_student',
+                method: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }),
+                success: function(response) {
+                    $('#management-message2').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message2').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // Edit staff details
+        $('#edit-staff').on('click', function() {
+            const Staff_ID = $('#edit_Staff_ID').val();
+            const field = $('#edit_fields').val();
+            const value = $('#edit_value').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/edit_staff',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Staff_ID, [field]: value }),
+                success: function(response) {
+                    $('#management-message5').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message5').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+        // Change student password
+        $('#change-password-student').on('click', function() {
+            const SRN = $('#SRN').val();
+            const current_password = $('#current-password').val();
+            const new_password = $('#new-password').val();
+
+            // Simple validation
+            if (!current_password || !new_password) {
+                $('#student-message').html('<div style="color:red;">All fields are required.</div>');
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/student/change_password',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN, current_password, new_password }),
+                success: function(response) {
+                    $('#student-message').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#student-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+            // Back to login from student section
+        $('#back-to-login-student').on('click', function() {
+            // Hide student section and show login section
+            $('#student-section').hide();
+            $('#login-section').show();
+
+            // Clear login fields
+            $('#username').val('');
+            $('#password').val('');
+        });
+
+        // Back to login from management section
+        $('#back-to-login-management').on('click', function() {
+            // Hide management section and show login section
+            $('#management-section').hide();
+            $('#login-section').show();
+
+            // Clear login fields
+            $('#username').val('');
+            $('#password').val('');
+        });
+
+
+
+        // Delete staff record
+        $('#delete-staff').on('click', function() {
+            const Staff_ID = $('#delete_Staff_ID').val();
+
+            if (!Staff_ID) {
+                $('#management-message4').html(`<div style="color:red;">Please enter a valid Staff ID to delete.</div>`);
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/delete_staff',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Staff_ID }),
+                success: function(response) {
+                    $('#management-message4').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message4').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View transaction (management)
+        $('#view-transaction-management').on('click', function() {
+            const SRN = $('#transaction_SRN').val();
+            
+            if (!SRN) {
+                $('#transaction-message').html('<div style="color:red;">Please enter an SRN.</div>');
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/view_transaction',  // Updated URL to match your Flask route
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }), // Sending SRN
+                success: function(response) {
+                    // Create HTML table for transaction details
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Transaction Status</th>
+                                <th>Type of Scholarship</th>
+                                <th>Scholarship Amount</th>
+                                <th>Name</th>
+                            </tr>
+                            <tr>
+                                <td>${response.transaction_status}</td>
+                                <td>${response.type_of_scholarship}</td>
+                                <td>${response.scholarship_amount}</td>
+                                <td>${response.name}</td>
+                            </tr>
+                        </table>
+                    `;
+
+                    // Display the table in the message section
+                    $('#transaction-message').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#transaction-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+
+        // Generate scholarship report
+        $('#generate-scholarship-report').on('click', function() {
+            const semester = $('#semester').val();
+            const branch = $('#branch').val();
+            const section = $('#section').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/scholarship_distribution',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ semester, branch, section }),
+                success: function(response) {
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Scholarship Type</th>
+                                <th>Number of Students</th>
+                            </tr>`;
+                    response.scholarship_distribution.forEach(function(scholarship) {
+                        tableHtml += `
+                            <tr>
+                                <td>${scholarship.type_of_scholarship}</td>
+                                <td>${scholarship.student_count}</td>
+                            </tr>`;
+                    });
+                    tableHtml += `</table>`;
+                    $('#scholarship-table').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#scholarship-table').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+       // View total scholarship allocation
+        $('#view-total-allocation').on('click', function() {
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/scholarship_allocation',
+                method: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Scholarship Type</th>
+                                <th>Total Amount Allocated</th>
+                            </tr>`;
+                    for (const [scholarshipType, amount] of Object.entries(response.allocation)) {
+                        tableHtml += `
+                            <tr>
+                                <td>${scholarshipType}</td>
+                                <td>${amount}</td>
+                            </tr>`;
+                    }
+                    tableHtml += `</table>`;
+                    $('#allocation-table').html(tableHtml);
+                },
+                error: function(xhr) {
+                    $('#allocation-table').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View Scholarship Statistics
+        $('#view-scholarship-stats').on('click', function() {
+            const semester = $('#scholarship-semester').val();
+
+            // Only proceed if semester is provided
+            if (!semester) {
+                $('#scholarship-stats-table').html('<div style="color:red;">Please enter a semester.</div>');
+                return;
+            }
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/scholarship_stats', // Updated URL to match Flask route
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ semester }),
+                success: function(response) {
+                    let tableHtml = `
+                        <table>
+                            <tr>
+                                <th>Fee Category</th>
+                                <th>Scholarship Type</th>
+                                <th>Number of Students</th>
+                            </tr>`;
+                    response.scholarship_statistics.forEach(function(stat) {
+                        tableHtml += `
+                            <tr>
+                                <td>${stat.Fee_category}</td> <!-- Make sure the property names match -->
+                                <td>${stat.Type_of_Scholarship}</td>
+                                <td>${stat.student_count}</td>
+                            </tr>`;
+                    });
+                    tableHtml += `</table>`;
+                    $('#scholarship-stats-table').html(tableHtml);
+                },
+                error: function(xhr) {
+                $('#scholarship-stats-table').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+
+
+        // Management Change Password
+        $('#change-password-management').on('click', function() {
+            const Staff_ID = $('#Staff_ID').val();
+            const current_password = $('#current-password-management').val();
+            const new_password = $('#new-password-management').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/change_password',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Staff_ID, current_password, new_password }),
+                success: function(response) {
+                    $('#management-message-pwd').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message-pwd').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Scholarship Login</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        #login-section, #student-section, #management-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        #login-message, #student-message, #management-message {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-section">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="user_type">Select User Type:</label>
+            <select id="user_type" required>
+                <option value="student">Student</option>
+                <option value="management">Management</option>
+            </select>
+            <button type="submit">Login</button>
+        </form>
+        <div id="login-message"></div>
+    </div>
+
+    <div id="student-section" style="display:none;">
+        <button id="back-to-login-student">Back</button>
+        <h2>Student Dashboard</h2>
+        
+        <label for="SRN">Enter SRN:</label>
+        <input type="text" id="SRN">
+        <button id="view-details">View Details</button>
+        <button id="view-transaction">View Transaction Status</button>
+        <div id="student-message"></div>
+    </div>
+
+    <div id="management-section" style="display:none;">
+        <button id="back-to-login-management">Back</button>
+        <h2>Management Dashboard</h2>
+        
+        <label for="Staff_ID">Enter Staff ID:</label>
+        <input type="text" id="Staff_ID">
+        <button id="view-staff">View Staff Details</button>
+        
+        <h3>Update Student Details</h3>
+        <label for="update_SRN">Enter SRN:</label>
+        <input type="text" id="update_SRN">
+        <label for="update_fields">Field to Update:</label>
+        <select id="update_fields">
+            <option value="Name">Name</option>
+            <option value="Semester">Semester</option>
+            <option value="Section">Section</option>
+            <option value="Branch">Branch</option>
+            <option value="Gender">Gender</option>
+            <option value="Date_of_Birth">Date of Birth</option>
+            <option value="Street">Street</option>
+            <option value="City">City</option>
+            <option value="State">State</option>
+            <option value="CGPA">CGPA</option>
+            <option value="SGPA">SGPA</option>
+            <option value="Credits_received">Credits Received</option>
+            <option value="Credits_required">Credits Required</option>
+            <option value="Account_number">Account Number</option>
+            <option value="IFSC_code">IFSC Code</option>
+            <option value="Fee_category">Fee Category</option>
+            <option value="Fee_amount">Fee Amount</option>
+            <option value="Payment_status">Payment Status</option>
+            <option value="Eligibility">Eligibility</option>
+        </select>
+        <input type="text" id="update_value" placeholder="New Value">
+        <button id="update-student">Update Student Details</button>
+        
+        <h3>Update Transaction Status</h3>
+        <label for="transaction_SRN">Enter SRN:</label>
+        <input type="text" id="transaction_SRN">
+        <label for="transaction_Name">Enter Name:</label>
+        <input type="text" id="transaction_Name">
+        <label for="transaction_status">New Transaction Status:</label>
+        <input type="text" id="transaction_status" placeholder="New Status">
+        <button id="update-transaction">Update Transaction Status</button>
+        
+        <div id="management-message"></div>
+    </div>
+
+    <script>
+        // Login handler
+        $('#login-form').on('submit', function(e) {
+            e.preventDefault();
+            const user_type = $('#user_type').val();
+            
+            $.ajax({
+                url: 'http://127.0.0.1:5000/login',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ user_type }),
+                success: function(response) {
+                    $('#login-message').html(`<div style="color:green;">${response.message}</div>`);
+                    $('#login-section').hide();
+                    if (user_type === 'student') {
+                        $('#student-section').show();
+                    } else {
+                        $('#management-section').show();
+                    }
+                },
+                error: function(xhr) {
+                    $('#login-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View student details
+        $('#view-details').on('click', function() {
+            const SRN = $('#SRN').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/student/view',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }),
+                success: function(response) {
+                    $('#student-message').html(`<div style="color:green;">Details: ${JSON.stringify(response.student)}</div>`);
+                },
+                error: function(xhr) {
+                    $('#student-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View transaction status
+        $('#view-transaction').on('click', function() {
+            const SRN = $('#SRN').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/student/transaction',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN }),
+                success: function(response) {
+                    $('#student-message').html(`<div style="color:green;">Transaction Status: ${response.transaction_status}, Type of Scholarship: ${response.type_of_scholarship}</div>`);
+                },
+                error: function(xhr) {
+                    $('#student-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // View staff details
+        $('#view-staff').on('click', function() {
+            const Staff_ID = $('#Staff_ID').val();
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/view_staff',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ Staff_ID }),
+                success: function(response) {
+                    $('#management-message').html(`<div style="color:green;">Staff Details: ${JSON.stringify(response.staff)}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // Update student details
+        $('#update-student').on('click', function() {
+            const SRN = $('#update_SRN').val();
+            const field = $('#update_fields').val();
+            const value = $('#update_value').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/edit_student',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN, [field]: value }),
+                success: function(response) {
+                    $('#management-message').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+
+        // Back to login from student section
+        $('#back-to-login-student').on('click', function() {
+            $('#student-section').hide();
+            $('#login-section').show();
+        });
+
+        // Back to login from management section
+        $('#back-to-login-management').on('click', function() {
+            $('#management-section').hide();
+            $('#login-section').show();
+        });
+
+
+        // Update transaction status
+        $('#update-transaction').on('click', function() {
+            const SRN = $('#transaction_SRN').val();
+            const Name = $('#transaction_Name').val();
+            const status = $('#transaction_status').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/management/edit_transaction',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SRN, Name, status }),
+                success: function(response) {
+                    $('#management-message').html(`<div style="color:green;">${response.message}</div>`);
+                },
+                error: function(xhr) {
+                    $('#management-message').html(`<div style="color:red;">${xhr.responseJSON.error}</div>`);
+                }
+            });
+        });
+    </script>
+</body>
+</html> -->
